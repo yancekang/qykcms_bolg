@@ -1,0 +1,12 @@
+{:file="header"}
+<div class="qyk_both">
+	<div class="bloglist">
+	{:menu="photo",as="$val2"}
+		{:list="photo",scat="$val2['classid']",size=1,page="false",none="<div class='qyk_none'>这里什么都还没有...</div>"}
+			<div class="album"><a href="{:link="log=photo&scat=<$val2['classid']>"}"><img src="{:val="cover",size="s"}"><div class="text">{:$val2['title']}</div></a></div>
+		{:end}
+	{:end}
+	<div style="clear:both"></div>
+	</div>
+</div>
+{:file="footer"}

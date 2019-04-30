@@ -1,0 +1,39 @@
+<?php
+if(!ispower($admin_group,'advert_edit'))ajaxreturn(1,'权限不足，操作失败');
+$languages=arg('languages','post','url');
+$adtype=arg('adtype','post','int');
+$title=arg('title','post','txt');
+$link=arg('link','post','url');
+$fileurl=arg('fileurl','post','url');
+$other=arg('other','post','url');
+$status=arg('status','post','int');
+$sort=arg('sort','post','int');
+$content=arg('content','post','txt');
+$advert=db_getshow('advert','*','webid='.$website['webid'].' and id='.$tcz['id']);
+if($advert){
+	if($advert['fileurl']!=$fileurl){
+		if($advert['fileurl']!=''){
+			$delpath='..'.getfile_admin('pic',$advert['fileurl']);
+			if(file_exists($delpath))unlink($delpath);
+			}
+		if($fileurl!=''){
+			$oldurl='../'.$website['upfolder'].setup_uptemp.$fileurl;
+			$fileurl='myphoto/'.date('Ym_').$fileurl;
+			copy($oldurl,'../'.$website['upfolder'].$fileurl);
+			}
+		}
+	db_upshow('advert','adtype='.$adtype.',title="'.$title.'",link="'.$link.'",fileurl="'.$fileurl.'",other="'.$other.'",status='.$status.',sort='.$sort.',content="'.$content.'"','id='.$tcz['id']);
+	infoadminlog($website['webid'],$tcz['admin'],17,'编辑广告图片“'.$title.'”（ID='.$tcz['id'].'）');
+}else{
+	if($fileurl!=''){
+		$oldurl='../'.$website['upfolder'].setup_uptemp.$fileurl;
+		$fileurl='myphoto/'.date('Ym_').$fileurl;
+		copy($oldurl,'../'.$website['upfolder'].$fileurl);
+		}
+	$tab='webid,languages,adtype,title,link,fileurl,other,status,sort,content';
+	$val=$website['webid'].',"'.$languages.'",'.$adtype.',"'.$title.'","'.$link.'","'.$fileurl.'","'.$other.'",'.$status.','.$sort.',"'.$content.'"';
+	db_intoshow('advert',$tab,$val);
+	infoadminlog($website['webid'],$tcz['admin'],17,'新建广告图片“'.$title.'”');
+	}
+countcapacity($website['webid']);
+ajaxreturn(0,'广告信息编辑成功');

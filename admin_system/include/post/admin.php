@@ -1,0 +1,42 @@
+<?php
+if(!ispower($admin_group,'super'))ajaxreturn(1,'权限不足，操作失败');
+$user_admin=arg('user_admin','post','txt');
+$config_type=arg('config_type','post','int');
+$user_pass=arg('user_pass','post','txt');
+$user_email=arg('user_email','post','url');
+$user_phone=arg('user_phone','post','txt');
+$user_head=arg('user_head','post','url');
+$config_group=arg('config_group','post','int');
+$admin=db_getshow('admin','*','webid='.$website['webid'].' and id='.$tcz['id']);
+if($admin){
+	if($admin['user_head']!=$user_head){
+		if($admin['user_head']!=''){
+			$delpath='..'.getfile_admin('pic',$admin['user_head']);
+			if(file_exists($delpath))unlink($delpath);
+			}
+		if($user_head!=''){
+			$oldhead='../'.$website['upfolder'].setup_uptemp.$user_head;
+			$user_head='admin/'.date('Ym_').$user_head;
+			copy($oldhead,'../'.$website['upfolder'].$user_head);
+			}
+		}
+	if($user_pass!='')$user_pass=md5($user_pass.$admin['user_addkey']);
+	db_upshow('admin',goif($user_pass!='','user_pass="'.$user_pass.'",').'config_type='.$config_type.',user_email="'.$user_email.'",user_phone="'.$user_phone.'",user_head="'.$user_head.'",config_group='.$config_group.',config_type='.$config_type,'id='.$tcz['id']);
+	infoadminlog($website['webid'],$tcz['admin'],12,'编缉管理员“'.$user_admin.'”（ID='.$tcz['id'].'）');
+}else{
+	$getadmin=db_getshow('admin','id','webid='.$website['webid'].' and user_admin="'.$user_admin.'"');
+	if($getadmin)ajaxreturn(1,'帐号 '.$user_admin.' 已被使用，请更换');
+	if($user_head!=''){
+		$oldhead='../'.$website['upfolder'].setup_uptemp.$user_head;
+		$user_head='admin/'.date('Ym_').$user_head;
+		copy($oldhead,'../'.$website['upfolder'].$user_head);
+		}
+	$addkey=randomkeys(8);
+	$user_pass=md5($user_pass.$addkey);
+	$tab='webid,user_admin,user_pass,user_loginkey,user_addkey,user_email,user_phone,user_head,login_ip,login_num,time_add,time_login,config_group,config_type';
+	$val=$website['webid'].',"'.$user_admin.'","'.$user_pass.'","","'.$addkey.'","'.$user_email.'","'.$user_phone.'","'.$user_head.'","",0,'.time().','.time().','.$config_group.','.$config_type;
+	db_intoshow('admin',$tab,$val);
+	infoadminlog($website['webid'],$tcz['admin'],2,'新建管理员“'.$user_admin.'”');
+	}
+countcapacity($website['webid']);
+ajaxreturn(0,'管理员帐号编辑成功');

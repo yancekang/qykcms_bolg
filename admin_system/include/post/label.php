@@ -1,0 +1,23 @@
+<?php
+if(!ispower($admin_group,'skin_label'))ajaxreturn(1,'权限不足，操作失败');
+$filepath='label/'.date('Y_m').'/';
+createDirs('../'.$website['upfolder'].$filepath);
+$lab=db_getshow('label','*','webid='.$website['webid'].' and id='.$tcz['id']);
+$sort=arg('sort','post','int');
+$edtype=arg('edtype','post','int');
+$title=arg('title','post','txt');
+$content=arg('content','post','url');
+if($lab){
+	$cont=handleImage($content,$lab['piclist'],'label');
+	db_upshow('label','sort='.$sort.',title="'.$title.'",content="'.$cont['cont'].'",piclist="'.$cont['img'].'"','id='.$tcz['id']);
+	infoadminlog($website['webid'],$tcz['admin'],20,'编辑标签“'.$lab['title'].'”（ID='.$lab['dataid'].'）');
+}else{
+	$dataid=getdataid($website['webid'],'label','dataid');
+	$cont=handleImage($content,'','label');
+	$tab='webid,dataid,edtype,title,piclist,content,sort,time_add';
+	$val=$website['webid'].','.$dataid.','.$edtype.',"'.$title.'","'.$cont['img'].'","'.$cont['cont'].'",'.$sort.','.time();
+	$newid=db_intoshow('label',$tab,$val,true);
+	infoadminlog($website['webid'],$tcz['admin'],20,'新建标签“'.$title.'”（ID='.$dataid.'）');
+	ajaxreturn(0,$newid);
+	}
+ajaxreturn(0,'已成功保存标签信息');

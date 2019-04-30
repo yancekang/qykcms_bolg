@@ -1,0 +1,27 @@
+<?php
+if(!ispower($admin_group,'tool_email'))ajaxreturn(1,'权限不足，操作失败');
+$filepath='tool/'.date('Y_m').'/';
+createDirs('../'.$website['upfolder'].$filepath);
+$data=db_getshow('tool_email','*','webid='.$website['webid'].' and id='.$tcz['id']);
+$title=arg('title','post','txt');
+$content=arg('content','post','url');
+$addressid=arg('addressid','post','int');
+$sendtype=arg('sendtype','post','int');
+$seconds=arg('seconds','post','int');
+$sendnum=arg('sendnum','post','int');
+if($sendtype==1)$sendnum=1;
+$randnum=arg('randnum','post','int');
+$emailto=trim(arg('emailto','post','url'));
+if($data){
+	$cont=handleImage($content,$data['piclist'],'tool');
+	db_upshow('tool_email','title="'.$title.'",content="'.$cont['cont'].'",piclist="'.$cont['img'].'",addressid='.$addressid.',sendtype='.$sendtype.',seconds='.$seconds.',sendnum='.$sendnum.',randnum='.$randnum.',emailto="'.$emailto.'"','id='.$tcz['id']);
+	infoadminlog($website['webid'],$tcz['admin'],21,'编辑邮件群发任务“'.$data['title'].'”（ID='.$tcz['id'].'）');
+}else{
+	$cont=handleImage($content,'','tool');
+	$tab='webid,title,emailto,addressid,piclist,content,sendnum,sendtype,results,seconds,randnum,time_send,time_add';
+	$val=$website['webid'].',"'.$title.'","'.$emailto.'",'.$addressid.',"'.$cont['img'].'","'.$cont['cont'].'",'.$sendnum.','.$sendtype.',0,'.$seconds.','.$randnum.',0,'.time();
+	db_intoshow('tool_email',$tab,$val);
+	$tcz['id']=infoadminlog($website['webid'],$tcz['admin'],21,'新建邮件群发任务“'.$title.'”',true);
+	ajaxreturn(0);
+	}
+ajaxreturn(0,'已成功保存邮件群发任务');

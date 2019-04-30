@@ -1,0 +1,90 @@
+@charset "utf-8";
+body,html{background:#f4f4f4;min-width:100%;min-height:100%}
+body,input,textarea,select{word-wrap:break-word;font-family:"Microsoft Yahei","Verdana","arial","宋体";color:#333333;font-size:14px;outline:none;word-break:break-all;word-wrap:break-word}
+a{text-decoration:none;color:#333333;outline:none}
+a:hover{text-decoration:underline}
+
+.qyk_line{width:100%;height:20px;clear:both;overflow:hidden}
+.qyk_none{width:100%;padding:50px 0 50px 0;text-align:center}
+.qyk_shadow{box-shadow:#ddd 0 0 20px}
+
+.qyk_dl{width:100%;height:60px;background:#fff}
+.qyk_dl .dlout{position:relative;width:1200px;height:100%;margin:auto}
+.qyk_dl .dlout .logo{position:absolute;z-index:1;top:0px;left:0px;height:100%;width:180px;overflow:hidden}
+.qyk_dl .dlout .logo img{max-width:100%;max-height:100%}
+.qyk_dl .dlout .ui_search{position:absolute;z-index:1;top:14px;right:0px}
+
+.qyk_dl .dlout .menu{padding:14px 0 0 250px;display:inline;float:left;height:32px}
+.qyk_dl .dlout .menu a{text-decoration:none;color:#333;display:inline;float:left;padding:0 12px 0 12px;height:100%;line-height:32px;border-radius:5px}
+.qyk_dl .dlout .menu .on{text-decoration:none;background:#63c4ee;color:#fff}
+.qyk_dl .dlout .menu .out:hover{background:#f4f4f4;}
+.qyk_dl .dlout .menu span{display:inline;float:left;height:100%;line-height:32px;color:#e8e8e8;font-size:10px;text-align:center;width:18px;}
+
+.qyk_footer{clear:both;width:100%;height:62px;color:#5e636e;background:#1c202a;padding-top:10px}
+.qyk_footer .outer{width:1200px;margin:auto}
+.qyk_footer a{color:#999}
+.qyk_footer .left{display:inline;float:left;padding-top:10px}
+.qyk_footer .right{display:inline;float:right;text-align:right;font-size:12px;line-height:25px}
+
+.qyk_body{width:1200px;margin:auto}
+.qyk_both{width:100%;display:inline;float:left}
+.qyk_left{width:860px;display:inline;float:left}
+.qyk_left .left_tit,.qyk_both .left_tit{width:100%;height:46px;}
+.qyk_left .left_tit .left,.qyk_both .left_tit .left{display:inline;float:left;font-size:18px}
+.qyk_left .left_tit .loca,.qyk_both .left_tit .loca{display:inline;float:right;color:#999;padding-top:5px}
+.qyk_left .left_tit .loca a,.qyk_both .left_tit .loca a{color:#666}
+.qyk_left .left_tit .loca span,.qyk_both .left_tit .loca span{padding:0 5px 0 5px}
+.qyk_left .left_tit .loca a:last-child,.qyk_both .left_tit .loca a:last-child{color:#006600}
+.qyk_left .left_tit .right,.qyk_both .left_tit .right{display:inline;float:right}
+.qyk_left .left_tit .right a,.qyk_both .left_tit .right a{margin-left:10px;text-decoration:none;background:#e5e5e5;color:#666;display:inline-block;padding:0 12px 0 12px;height:30px;line-height:30px;border-radius:5px;font-size:14px}
+.qyk_left .left_tit .right .scat_out:hover,.qyk_both .left_tit .right .scat_out:hover{text-decoration:none;background:#63c4ee;color:#fff}
+.qyk_left .left_tit .right .scat_on,.qyk_both .left_tit .right .scat_on{text-decoration:none;background:#63c4ee;color:#fff}
+.qyk_left .block,.qyk_both .block{padding:20px;background:#fff;color:both}
+
+.qyk_left .ui_page,.qyk_both .ui_page{border-top:20px solid #fff}
+.qyk_left .mybanner{width:858px;padding:1px;height:238px;overflow:hidden}
+.qyk_left .ui_advert .banner span{background-size:100% auto}
+.qyk_left .bloglist{width:820px;padding:0 20px 20px 20px;background:#fff}
+.qyk_both .bloglist{width:1160px;padding:0 20px 20px 20px;background:#fff}
+.qyk_left .lookmore{width:100%;height:38px;line-height:38px;color:#999;display:block;border-top:20px solid #fff;text-align:center;text-decoration:none;background:#f2f2f2}
+.qyk_left .lookmore:hover{background:#e8e8e8;color:#333}
+.qyk_left .prenext{margin-top:20px;width:100%;height:80px;padding-top:20px;border-top:1px dashed #d8d8d8}
+.qyk_left .prenext div{color:#999;width:100%;height:32px}
+.qyk_left .prenext div span{font-weight:bold;color:#666}
+.qyk_left .prenext div a{color:#006600}
+.qyk_left .ui_expmood .moodout{width:144px;float:left;margin-left:25px}
+.qyk_left .ui_expmood .moodout:first-child{margin-left:0}
+.qyk_left .ui_expmood .moodout a{width:100%}
+
+.qyk_right{width:320px;float:right;display:inline}
+.qyk_right .block{padding:20px;clear:both;width:280px;background:#fff}
+.qyk_right .block_2{padding:1px;clear:both;width:318px;height:238px;background:#fff}
+.qyk_right .block_tit{width:100%;height:36px;}
+.qyk_right .block_tit .left{display:inline;float:left;padding:0 20px 0 20px;height:100%;line-height:36px;font-size:16px}
+.qyk_right .block_tit .right{display:inline;float:right;padding-top:10px;font-size:12px}
+.qyk_right .block_tit .more{margin-top:8px;display:inline;float:right;background:#f4f4f4;text-decoration:none;color:#333;padding:0 5px 0 5px;height:26px;line-height:26px;font-size:12px;border-radius:5px}
+.qyk_right .block_tit .more:hover{text-decoration:none;background:#63c4ee;color:#fff}
+.qyk_right .block_tit .redbg{background:#ff5e52;color:#fff}
+.qyk_right .block_tit .bluebg{background:#25acd9;color:#fff}
+.qyk_right .block_tit .greenbg{background:#32bf32;color:#fff}
+
+.content_about{width:100%;clear:both;line-height:200%}
+.content_about img{max-width:100%}
+.content_about p{padding:10px 0 10px 0}
+.content_blog{width:100%}
+.content_blog .show1{width:100%;height:70px;font-size:24px;line-height:60px}
+.content_blog .show2{width:100%;height:40px;}
+.content_blog .show2 .share{display:inline;float:left;color:#999}
+.content_blog .show2 .time{display:inline;float:right;color:#999}
+.content_blog .show3{min-height:20px;width:100%;line-height:200%;clear:both}
+.content_blog .show3 img{max-width:100%}
+.content_blog .show3 p{padding:10px 0 10px 0}
+
+#qyk_coverlink{position:relative}
+#qyk_coverlink a{position:absolute;z-index:1;display:block;width:50%;height:100%;top:0px}
+#qyk_coverlink a span{display:none;width:100%;height:100%;background-repeat:no-repeat}
+#qyk_coverlink .prelink{left:0}
+#qyk_coverlink .prelink span{background-image:url("precover.png");background-position:left center}
+#qyk_coverlink .nextlink{right:0}
+#qyk_coverlink .nextlink span{background-image:url("nextcover.png");background-position:right center}
+#qyk_coverlink a:hover span{display:block}

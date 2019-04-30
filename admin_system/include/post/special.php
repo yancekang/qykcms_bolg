@@ -1,0 +1,129 @@
+<?php
+if(!ispower($admin_group,'special_edit'))ajaxreturn(1,'权限不足，操作失败');
+$filepath='special/'.date('Y_m').'/';
+createDirs('../'.$website['upfolder'].$filepath);
+$cata=arg('post_cata','post','url');
+$cata_arr=explode('_',$cata.'__');
+$bcat=floatval($cata_arr[0]);
+$scat=floatval($cata_arr[1]);
+$lcat=floatval($cata_arr[2]);
+$languages=arg('post_languages','post','url');
+$mark='';
+$bmod=db_getshow('module','mark,languages,classid','webid='.$website['webid'].' and (menutype=0 or menutype=999) and classid='.$bcat);
+if($bmod){
+	$languages=$bmod['languages'];
+	$mark=$bmod['mark'];
+	}
+if($languages=='')ajaxreturn(1,'未知的语言版本');
+@require_once('../'.setup_webfolder.$website['webid'].'/config/global.php');
+$data=array(
+	'webid'=>$website['webid'],
+	'dataid'=>getdataid($website['webid'],'special','dataid'),
+	'mark'=>$mark,
+	'bcat'=>$bcat,
+	'scat'=>$scat,
+	'lcat'=>$lcat,
+	'languages'=>$languages,
+	'title'=>trim(arg('post_title','post','txt')),
+	'keyword'=>trim(arg('post_keyword','post','txt')),
+	'description'=>trim(arg('post_description','post','txt')),
+	'sort'=>arg('post_sort','post','int'),
+	'star'=>arg('post_star','post','int'),
+	'cover'=>arg('post_cover','post','url'),
+	'piclist'=>'',
+	'content'=>'',
+	'isok'=>arg('post_isok','post','int'),
+	'time_add'=>arg('post_time_add','post','url'),
+	'time_update'=>time(),
+	'computer'=>arg('post_computer','post','int'),
+	'mobile'=>arg('post_mobile','post','int')
+	);
+if($data['title']=='')$data['title']=$mod_title;
+if($data['time_add']!='')$data['time_add']=strtotime($data['time_add']);
+else $data['time_add']=time();
+$spe=db_getshow('special','*','webid='.$website['webid'].' and id='.$tcz['id']);
+if($spe){
+	$data['dataid']=$spe['dataid'];
+	$data['languages']=$spe['languages'];
+	}
+$covercut=explode(',',setup_cover_cut.',0');
+$cut_w=(int)$covercut[0];
+$cut_h=(int)$covercut[1];
+$coversize=explode(',',setup_cover_size.',1');
+$cover_w=(int)$coversize[0];
+$cover_h=(int)$coversize[1];
+if($cover_w<1)$cover_w=1;
+if($cover_h<1)$cover_h=1;
+$covercanvas=setup_cover_canvas;
+$content=arg('post_content','post','url');
+if($spe){
+	if($spe['cover']!=$data['cover']){
+		if($spe['cover']!=''){
+			$delpath1='..'.getfile_admin('pic',$spe['cover'],'s');
+			if(file_exists($delpath1))unlink($delpath1);
+			$delpath2='..'.getfile_admin('pic',$spe['cover'],'b');
+			if(file_exists($delpath2))unlink($delpath2);
+			}
+		if($data['cover']!=''){
+			$oldcover='../'.$website['upfolder'].setup_uptemp.$data['cover'];
+			$data['cover']=$filepath.$data['cover'];
+			$cover_b=str_replace('{size}','b',$data['cover']);
+			$cover_s=str_replace('{size}','s',$data['cover']);
+			if(!setup_marktype_cover||setup_markimg=='')copy($oldcover,'../'.$website['upfolder'].$cover_b);
+			else{
+				$ps2=new photo();
+				$ps2->setOpenpath($oldcover);
+				$ps2->setSavepath('../'.$website['upfolder'].$cover_b);
+				$ps2->setImgquality(90);
+				$ps2->setImgmark('..'.getfile_admin('pic',setup_markimg),setup_markxy,setup_markalpha,setup_markside,setup_markmin);
+				$ps2->createImg();
+				}
+			$ps=new photo();
+			$ps->setOpenpath($oldcover);
+			$ps->setSavepath('../'.$website['upfolder'].$cover_s);
+			$ps->setImgresize($covercanvas);
+			$ps->setImgquality(90);
+			$ps->setImgsize($cover_w,$cover_h,$cover_w,$cover_h);
+			if(setup_marktype_cover&&setup_markimg!='')$ps->setImgmark('..'.getfile_admin('pic',setup_markimg),setup_markxy,setup_markalpha,setup_markside,setup_markmin);
+			$ps->setCutsize_end($cut_w,$cut_h);
+			$ps->createImg();
+			}
+		}
+	$cont=handleImage($content,$spe['piclist'],'special');
+	$data['piclist']=$cont['img'];
+	$data['content']=$cont['cont'];
+	db_uparr('special',$data,'webid='.$website['webid'].' and id='.$spe['id']);
+	infoadminlog($website['webid'],$tcz['admin'],28,'编辑专题“'.$data['title'].'”（ID='.$data['dataid'].'）');
+}else{
+	if($data['cover']!=''){
+		$oldcover='../'.$website['upfolder'].setup_uptemp.$data['cover'];
+		$data['cover']=$filepath.$data['cover'];
+		$cover_b=str_replace('{size}','b',$data['cover']);
+		$cover_s=str_replace('{size}','s',$data['cover']);
+		$ps=new photo();
+		$ps->setOpenpath($oldcover);
+		$ps->setSavepath('../'.$website['upfolder'].$cover_s);
+		$ps->setImgresize($covercanvas);
+		$ps->setImgquality(90);
+		$ps->setImgsize($cover_w,$cover_h,$cover_w,$cover_h);
+		if(setup_marktype_cover&&setup_markimg!='')$ps->setImgmark('..'.getfile_admin('pic',setup_markimg),setup_markxy,setup_markalpha,setup_markside,setup_markmin);
+		$ps->setCutsize_end($cut_w,$cut_h);
+		$ps->createImg();
+		if(!setup_marktype_cover||setup_markimg=='')copy($oldcover,'../'.$website['upfolder'].$cover_b);
+		else{
+			$ps2=new photo();
+			$ps2->setOpenpath($oldcover);
+			$ps2->setSavepath('../'.$website['upfolder'].$cover_b);
+			$ps2->setImgquality(90);
+			$ps2->setImgmark('..'.getfile_admin('pic',setup_markimg),setup_markxy,setup_markalpha,setup_markside,setup_markmin);
+			$ps2->createImg();
+			}
+		}
+	$cont=handleImage($content,'','special');
+	$data['piclist']=$cont['img'];
+	$data['content']=$cont['cont'];
+	db_intoarr('special',$data);
+	infoadminlog($website['webid'],$tcz['admin'],28,'新建专题“'.$data['title'].'”（ID='.$data['dataid'].'）');
+	}
+countcapacity($website['webid']);
+ajaxreturn(0,'已成功保存专题信息');

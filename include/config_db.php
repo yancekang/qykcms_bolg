@@ -1,0 +1,9 @@
+<?php
+/*-------------数据库--------------*/
+define('db_hostname','');
+define('db_database','');
+define('db_tabfirst','');
+define('db_username','');
+define('db_password','');
+define('db_charset','utf8');
+?>

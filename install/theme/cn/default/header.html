@@ -1,0 +1,9 @@
+<div class="qyk_dl qyk_shadow">
+	<div class="dlout">
+		<div class="logo"><a href="/"><img src="{:goif(setup_theme_logo!='',getfile('file',setup_theme_logo),$web['tempui'].'logo.gif')}"></a></div>
+		<div class="menu">{:menu}{:if="$sort>0"}<span>|</span>{:end}<a href="{:link="module",mod="url"}" class="{:goif($tcz['log']==$val['mark']||($tcz['log']=='photo'&&$val['mark']=='album'),'on','out')}" title="{:$val['title']}">{:$val['title']}</a>{:end}</div>
+		{:search=""}
+	</div>
+</div>
+<div class="qyk_line"></div>
+<div class="qyk_body">

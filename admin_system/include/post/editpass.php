@@ -1,0 +1,9 @@
+<?php
+if(!ispower($admin_group,'sys_pass'))ajaxreturn(1,'权限不足，操作失败');
+$old_pass=trim(arg('old_pass','post','txt'));
+$pass1=md5($old_pass.$admin_check['user_addkey']);
+if($admin_check['user_pass']!=$pass1)ajaxreturn(1,'旧登录密码输入错误');
+$user_pass=trim(arg('user_pass','post','txt'));
+$pass2=md5($user_pass.$admin_check['user_addkey']);
+db_upshow('admin','user_pass="'.$pass2.'"','id='.$admin_check['id']);
+ajaxreturn(0,'管理员密码修改成功');

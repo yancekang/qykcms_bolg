@@ -1,0 +1,26 @@
+<?php
+if(!ispower($admin_group,'tool_email'))ajaxreturn(1,'权限不足，操作失败');
+$email=arg('email','post','url');
+$name=arg('name','post','url');
+if($name=='')$name=$email;
+$code=arg('code','post','url');
+$pass=arg('pass','post','url');
+$sendtype=arg('sendtype','post','int');
+$emailtype=arg('emailtype','post','int');
+$server=arg('server','post','url');
+$port=arg('port','post','int');
+$content=arg('content','post','url');
+$isok=arg('isok','post','int');
+$data=db_getshow('tool_email_address','*','webid='.$website['webid'].' and id='.$tcz['id']);
+if($data){
+	db_upshow('tool_email_address','name="'.$name.'",email="'.$email.'",code="'.$code.'",pass="'.$pass.'",content="'.$content.'",sendtype='.$sendtype.',emailtype='.$emailtype.',server="'.$server.'",port='.$port.',isok='.$isok,'id='.$tcz['id']);
+	infoadminlog($website['webid'],$tcz['admin'],21,'编辑发件邮箱“'.$data['name'].'”（ID='.$tcz['id'].'）');
+}else{
+	$addressid=getdataid($website['webid'],'tool_email_address','addressid');
+	$tab='webid,addressid,name,email,code,pass,content,sendtype,emailtype,server,port,isok';
+	$val=$website['webid'].','.$addressid.',"'.$name.'","'.$email.'","'.$code.'","'.$pass.'","'.$content.'",'.$sendtype.','.$emailtype.',"'.$server.'",'.$port.','.$isok;
+	db_intoshow('tool_email_address',$tab,$val);
+	$tcz['id']=infoadminlog($website['webid'],$tcz['admin'],21,'新建发件邮箱“'.$name.'”（'.$addressid.'）',true);
+	ajaxreturn(0);
+	}
+ajaxreturn(0,'已成功保存发件邮箱');

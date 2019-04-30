@@ -1,0 +1,55 @@
+@charset "utf-8";
+body,html{background:#00bcf2;min-width:100%;min-height:100%}
+body,input,textarea,select{resize:none;word-wrap:break-word;font-family:"Microsoft Yahei","Verdana","arial","宋体";color:#333333;font-size:14px;outline:none}
+::-webkit-scrollbar{width:12px;height:12px}
+::-webkit-scrollbar-track{background-color:#b8e7f8}
+::-webkit-scrollbar-thumb{border-radius:3px;background:#1679ad}
+::-webkit-scrollbar-thumb:hover{border-radius:3px;background:#2089c0}
+a{text-decoration:none;color:#333333;outline:none}
+a:hover{text-decoration:underline}
+.ui_win{width:980px;margin:auto}
+.header{width:100%;height:78px;padding:20px 0 0 0}
+.header .logo{width:278px;height:58px;display:inline;float:left}
+.header .link{display:inline;float:right;padding-top:38px}
+.header .link a{margin-left:15px;color:#fff}
+.footer{width:100%;padding-top:15px;height:40px;text-align:right;font-size:12px;color:#fff}
+.footer a{color:#ff0;font-weight:bold}
+.bodyout{border-radius:10px;width:960px;background:#fff;padding:10px}
+.bodyout .noscript{width:100%;color:red;height:38px}
+.bodyout .title{border-radius:5px;width:100%;height:48px;font-weight:bold;color:#fff;line-height:48px;text-indent:20px;background:#00bcf2}
+.bodyout .cont{width:100%;margin-top:20px;background:#fff}
+.bodyout .cont .agreement{word-break:break-all;word-wrap:break-word;width:100%;height:500px;background:#fff;line-height:30px;font-size:14px;border:none;overflow-Y:scroll}
+.bodyout .btn{border-radius:5px;width:100%;height:36px;background:#d2eef8;margin-top:20px;padding:10px 0 10px 0;text-align:center}
+.bodyout .btn input{border-radius:3px;color:#fff;background:#25acd9;margin:0 8px 0 8px;cursor:default;height:36px;border:0px;padding:0 25px 0 25px;overflow:hidden;text-align:center}
+.bodyout .btn input:visited{color:#fff;background:#25acd9}
+.bodyout .btn input:hover{color:#c8feff;background:#1fb4e6}
+.bodyout .btn input:active{color:#dbf0f0;background:#0ea7db;box-shadow:0px 0px 5px #18a4d3}
+
+.bodyout .cont .item{font-weight:bold;color:#333 !important;background:#e7eaf4 !important;border-bottom:1px solid #fff !important;border-top:1px solid #fff !important}
+.bodyout .cont .item .cname{color:#333 !important;}
+.bodyout .cont .item .text{color:#333 !important;}
+.bodyout .cont .item .text2{color:#333 !important;}
+.bodyout .cont .item .tips{color:#333 !important;}
+.bodyout .cont .item1{clear:hoth;float:left;clear:both;width:100%;min-height:34px;_height:34px;line-height:34px;clear:both;padding:8px 0 8px 0;_border-bottom:1px dashed #d8d8d8}
+.bodyout .cont .item1:nth-child(odd){background:#F4F4F4;}
+.bodyout .cont .item1:hover{background:#e7eaf4;cursor:default}
+.bodyout .cont .item1 span{display:inline;float:left;height:100%}
+.bodyout .cont .item1 .cname{width:240px;text-indent:20px;color:#0058aa}
+.bodyout .cont .item1 .text{width:260px}
+.bodyout .cont .item1 .text2{width:200px}
+.bodyout .cont .item1 .tips{width:260px;color:#999}
+.bodyout .cont .item1 .text a{text-indent:22px;cursor:default;display:inline-block;vertical-align:middle;height:16px;line-height:16px;min-width:16px;_width:16px;background-repeat:no-repeat}
+.bodyout .cont .item1 .text a:hover{text-decoration:none}
+.bodyout .cont .yes{color:#00aa00;background-image:url("yes.png")}
+.bodyout .cont .no{color:#ff1763;background-image:url("no.png")}
+
+.bodyout .cont .item2{width:100%;height:50px;padding-top:16px;border-bottom:1px dashed #d8d8d8}
+.bodyout .cont .item2 .cname{padding-right:10px;display:inline;float:left;width:160px;line-height:40px;color:#333;font-weight:bold;text-align:right}
+.bodyout .cont .item2 .inp{display:inline;float:left;width:350px}
+.bodyout .cont .item2 .inp .text{border:1px solid #d8d8d8;padding:8px;width:300px;height:20px;line-height:20px}
+.bodyout .cont .item2 .inp .text:focus{border:1px solid #00bcf2;color:#00bcf2}
+.bodyout .cont .item2 .inp label{height:38px;line-height:38px;padding:0;float:left}
+.bodyout .cont .item2 .inp .box{width:18px;height:18px;margin:10px 10px 0 0;padding:0;float:left}
+.bodyout .cont .item2 .tips{display:inline;float:left;line-height:40px;color:#999}
+.bodyout .cont .item2 .tips a{display:inline;float:right;color:#009900}
+

@@ -1,0 +1,146 @@
+<?php
+ignore_user_abort();
+ini_set("max_execution_time","3600");
+//error_reporting(E_ALL);
+//ini_set('display_errors', '1');
+include('../include/config.php');
+include('../include/class_mysql.php');
+include('../include/function.php');
+include('include/function.php');
+nocache();
+$tcz=array(
+'admin'=>arg('admin','all'),
+'key'=>arg('key','all'),
+'log'=>arg('log','all')
+);
+if($tcz['log']=='')$tcz['log']='start';
+$webdomain=getdomain($_SERVER['SERVER_NAME']);
+$db=new mysql(2);
+$website=db_getshow('website','*','setup_weburl="'.$webdomain.'"');
+if(!$website){
+	ajaxreturn(9,'当前域名：'.$webdomain.'<br>抱歉，该域名尚未开通站点，请联系工作人员开通');
+	}
+if($tcz['key']==''||$tcz['admin']=='')ajaxreturn(1,'登录账号或key码错误，请关闭重新登录');
+$ver=db_getshow('version','*');
+$md5key=md5($tcz['key'].$ver['version']);
+$admin_check=db_getshow('admin','*','webid='.$website['webid'].' and user_admin="'.$tcz['admin'].'"');
+if(!$admin_check)ajaxreturn(1,'登录账号或密码有误，请关闭重新登录');
+if($md5key!=$admin_check['user_loginkey'])ajaxreturn(1,'当前账号可能在别处登录被迫下线，请尝试重新登录');
+$res='';
+switch($tcz['log']){
+	case 'start':
+		$path=arg('path','post','url');
+		$file=arg('file','post','url');
+		$md5=arg('md5','post','url');
+		$check=arg('check','post','int');
+		if($check<1||$check>2)$check=1;
+		$zipfull='../'.$path.$file;
+		if(!file_exists($zipfull)){
+			ajaxreturn(1,'没有找到升级文件，请确定PHP环境是否支持远程 file_get_contents 函数（错误代码：101）');
+			}
+		if(!function_exists('zip_open')){
+			ajaxreturn(1,'不支持zip_open函数，请检查PHP环境是否支持ZZIPlib库（错误代码：102）');
+			exit;
+			}
+		$zipmd5=strtolower(md5_file($zipfull));
+		if($md5!=$zipmd5){
+			@unlink($zipfull);
+			ajaxreturn(1,'升级文件md5较验失败，请稍候再次尝试升级（错误代码：103）');
+			}
+		$zip=zip_open($zipfull);
+		if($zip){
+			$htpath=dirname($_SERVER['SCRIPT_NAME']);
+			if($htpath=='')$htpath='admin_system';
+			$htpath=preg_replace('/^\//','',$htpath);
+
+			$allfile='';
+			$errfile='';
+			$errnum=0;
+			$allnum=0;
+			while($zip_entry=zip_read($zip)){
+				$isok=true;
+				$zipfile=zip_entry_name($zip_entry);
+				$htpath2=current(explode('/',$zipfile));
+				if($htpath2=='admin_system'){
+					$filefull='../'.str_replace($htpath2.'/',$htpath.'/',$zipfile);
+				}else{
+					$filefull='../'.$zipfile;
+					}
+				if(zip_entry_open($zip,$zip_entry)){
+					$filesize=zip_entry_filesize($zip_entry);
+					if(preg_match('/\/$/',$zipfile)&&$filesize==0)continue;
+					$filesize=sprintf('%.2f',($filesize/1024)).' KB';
+					$allnum=$allnum+1;
+					$contents=zip_entry_read($zip_entry,9999999);
+					switch($check){
+						case 1:
+							if(!file_exists($filefull)){
+								$dir=dirname($filefull);
+								if($dir=='.'||$dir=='..')$dir='../';
+								if(!is_dir($dir))createDirs($dir.'/');
+								if(!is_writable($dir))$isok=false;
+							}else{
+								if(is_writable($filefull)){
+									@$f=fopen($filefull,'r+');
+									if(!$f){
+										$isok=false;
+									}else{
+										fclose($f);
+										}
+								}else{
+									$isok=false;
+									}
+								}
+						break;
+						case 2:
+							@$f=fopen($filefull,'w');
+							if(!$f){
+								$isok=false;
+							}else{
+								fwrite($f,$contents);
+								fclose($f);
+								}
+						break;
+						}
+					$allfile.=goif($allfile!='',',').$allnum.'、'.iconv("gb2312","utf-8",$zipfile).'　（'.$filesize.'）';
+					if(!$isok){
+						$errnum=$errnum+1;
+						$errfile.=goif($errfile!='',',').$errnum.'、'.iconv("gb2312","utf-8",$zipfile).'　（'.$filesize.'）';
+						}
+					zip_entry_close($zip_entry);
+				}else{
+					ajaxreturn(1,'无法加载升级文件，建议您重新尝试或手动更新（错误代码：104）');
+					}
+				}
+			if($errnum>0){
+				ajaxreturn(8,$errfile);
+				}
+			zip_close($zip);
+		}else{
+			ajaxreturn(1,'无法解压升级文件，请检查PHP环境是否支持ZZIPlib库（错误代码：105）');
+			}
+		ajaxreturn(0,$allfile,$allnum);
+	break;
+	case 'install':
+		$data='success';
+		$readme='';
+		if(file_exists('update/install.php')){
+			require_once('update/install.php');
+			if(function_exists('initialization'))initialization();
+			deldir_admin('update/',false);
+			}
+		if(file_exists('../readme.txt')){
+			@$readme=file_get_contents('../readme.txt');
+			if($readme=='')$readme='本次更新详情，请登录 cms.qingyunke.com 查看';
+			$readme=nl2br($readme);
+			}
+		$version=arg('version','all','url');
+		$ver=db_getshow('version','*');
+		if($version!=$ver['version'])$data=$ver['version'];
+		ajaxreturn(0,$data,$ver['version_front'],$readme);
+	break;
+	default:
+		ajaxreturn(1,'未知参数：'.$tcz['log']);
+	break;
+	}
+?>

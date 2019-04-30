@@ -1,0 +1,7 @@
+<div class="qyk_dl">
+	<div class="menu menu_r"><a href="#" onclick="PZ.mlink(openmenu)">菜单</a></div>
+	{:if="$tcz['log']=='index'"}<div class="logo"><img src="{:goif(setup_theme_mobile_logo!='',getfile('file',setup_theme_mobile_logo),$web['tempui'].'logo.png')}"></div>{:else}<div class="menu menu_l"><a href="javascript:" onclick="PZ.mlink(function(){PZ.gopre('{:if="$tcz['id']>0"}{:link}{:else}{:link="log=index"}{:end}')})">返回</a></div><div class="loca">{:column}</div>{:end}
+</div>
+<div id="qyk_menulist" style="display:none">
+{:menu}<a href="{:link="module",mod="url"}">{:$val['title']}</a>{:end}<a href="/api.php?log=gopc">浏览电脑版</a>
+</div>

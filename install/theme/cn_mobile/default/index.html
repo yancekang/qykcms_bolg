@@ -1,0 +1,13 @@
+{:file="header"}
+<div class="qyk_both">
+	<div class="mybanner">
+	<div class="ui_advert" id="tcz_advert_1" style="width:100%;height:200px">{:list="photo",page=false,size=3,star=9}<a title="{:val="title"}" href="{:link="log=photo"}"><img src="{:val="cover",size="b"}" alt="{:val="title"}"></a>{:end}</div>
+	<script type="text/javascript">PZ.ready({callback:function(){PZ.banner({obj:$("#tcz_advert_1"),delay:4000,btn:"small",pos:"right",animate:3})}});</script>
+	</div>
+	<div class="left_tit"><h2>最近发表文章</h2></div>
+	<div class="bloglist">
+		{:list="blog",mod=2,cover=10,size=10,none="<div class='qyk_none'>这里什么都还没有...</div>"}
+		<a class="lookmore" href="{:link="log=blog"}">查看更多文章</a>
+	</div>
+</div>
+{:file="footer"}

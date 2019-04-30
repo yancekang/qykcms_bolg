@@ -1,0 +1,8 @@
+<?php
+$res='<div class="win_ajax ajax_edit">
+<table id="admin_show_1" class="ajax_tablist" cellpadding="12" cellspacing="1">
+<tr><td class="td6_1"><span class="help" title="1、备份的数据不包含上传的图片、主题模板等文件<br>2、备份主题模板请进入主题模板-导出当前主题<br>3、备份图片等文件请直接使用FTP等工具<br>4、备份文件将打包成zip格式，通过该文件可直接恢复数据">执行方式</span></td><td class="td6_2"><select id="post_backtype" tag="postinp"><option value="a">备份网站数据</option><option value="b">恢复网站数据（谨慎使用）</option></select></td></tr>
+<tr tag="backup_a"><td class="td6_1"><span class="help" title="1、当网站记录数较大时（超过2万篇文章），不建议使用单文件备份<br>2、使用分券备份方式，理论上再大的数据量都能成功备份<br>3、备份支持：系统设置、网站配置、管理员账号/分组/日志、文章、广告、留言、客服">备份选项</span></span></td><td class="td6_2"><select id="post_size" tag="postinp"><option value="0">单文件备份（建议20000记录内）</option><option value="2000" selected>分卷备份（2000条 / 卷）</option><option value="5000" selected>分卷备份（5000条 / 卷）- 推荐</option><option value="10000">分卷备份（10000条 / 卷）</option><option value="30000">分卷备份（30000条 / 卷）</option><option value="50000">分卷备份（50000条 / 卷）</option></select></td></tr>
+<tr tag="backup_b" style="display:none"><td class="td6_1"><span class="help" title="1、如选择“通过在线上传备份文件”，请在下方上传备份文件<br>2、如选择“已通过ftp等工具上传备份文件”时，请先解压备份文件，并将文件上传到 '.$website['upfolder'].setup_uptemp.'backup/ 目录下，再提交执行">恢复选项</span></span></span></td><td class="td6_2"><select id="post_hftype" tag="postinp"><option value="a">通过在线上传备份文件</option><option value="b">已通过ftp等工具上传备份文件</option></select></td></tr>
+<tr tag="backup_c" style="display:none"><td class="td6_1"><span class="helps" title="上传之间备份的文件（.zip格式），以便恢复网站数据">上传备份文件</span></td><td class="td6_2"><textarea onfocus="this.blur()" onclick="uploadimg({log:\'start\',types:\'none\',obj:$(this),ctype:\'zip文件|*.zip\'})" placeholder=".zip类型文件" class="inp_up" id="post_upfile"></textarea></td></tr>
+</table></div>';

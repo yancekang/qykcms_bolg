@@ -1,0 +1,16 @@
+{:file="header"}
+<div class="qyk_left">
+	{:menu="photo"}
+	{:if="$sort>0"}<div class="qyk_line"></div>{:end}
+	<div class="left_tit">
+		<div class="left">{:val="title"}</div>
+		<div class="right"><a href="{:link="log=photo&scat=<$val['classid']>"}" class="scat_out">进入相册</a></div>
+	</div>
+	<div class="bloglist qyk_shadow">
+		{:list="photo",mod=3,scat="$val['classid']",page="false",view="page",size=2,cover=2,none="<div class='qyk_none'>主人有点懒，这里什么都还没有...</div>"}
+		<div style="clear:both"></div>
+	</div>
+	{:end}
+</div>
+<div class="qyk_right">{:file="side_photo"}</div>
+{:file="footer"}

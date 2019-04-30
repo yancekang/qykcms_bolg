@@ -1,0 +1,35 @@
+{:file="header"}
+<div class="qyk_left">
+	<div class="mybanner qyk_shadow">{:advert=1,height="100%",btn="num",pos="right",target="new"}</div>
+	<div class="qyk_line"></div>
+	<div class="left_tit"><div class="left">最近发表文章</div><div class="right"><a class="scat_out" href="{:link="log=blog"}">更多精彩 &raquo;</a></div></div>
+	<div class="bloglist qyk_shadow">
+		{:list="blog",mod=1,size=12,none="<div class='qyk_none'>主人有点懒，这里什么都还没有...</div>"}
+		<a class="lookmore" href="{:link="log=blog"}">查看更多文章</a>
+	</div>
+</div>
+<div class="qyk_right">
+	<div class="block qyk_shadow">
+		<div class="block_tit"><div class="left redbg">推荐文章</div></div>
+		{:list="blog",titlelen=21,page=false,mod=2,cover=2,size=5,star=9}
+	</div>
+	<div class="qyk_line"></div>
+	<div class="block qyk_shadow">{:calendar="blog"}</div>
+	<div class="qyk_line"></div>
+	<div class="block_2 qyk_shadow">
+		<div class="ui_advert" id="tcz_advert_1" style="width:100%;height:238px">{:list="photo",page=false,size=5,star=9}<a title="{:val="title"}" href="{:link="article",mod="url"}"><img src="{:val="cover",size="s"}" alt="{:val="title"}"></a>{:end}</div>
+		<script type="text/javascript">PZ.ready({callback:function(){PZ.banner({obj:$("#tcz_advert_1"),delay:4000,btn:"small",pos:"right",animate:3})}});</script>
+	</div>
+	<div class="qyk_line"></div>
+	<div class="block qyk_shadow">
+		<div class="block_tit"><div class="left greenbg">最新留言</div><a class="more" href="{:link="log=feedback"}">More &raquo;</a></div>
+		{:feedback=1,mod="full",size=5,contlen=36,none="<div class='qyk_none'>还没有留言...</div>"}
+	</div>
+	<div class="qyk_line"></div>
+	<div class="block qyk_shadow">
+		<div class="block_tit"><div class="left bluebg">友情链接</div><a class="more" href="javascript:PZ.openfeedback()">申请链接</a></div>
+		{:list="link",page=false,mod=5,size=20,titlelen=7,none="<div class='qyk_none'>暂无链接记录</div>"}
+		<div style="clear:both"></div>
+	</div>
+</div>
+{:file="footer"}

@@ -1,0 +1,40 @@
+<?php
+if(!ispower($admin_group,'customer_edit'))ajaxreturn(1,'权限不足，操作失败');
+$post_languages=arg('post_languages','post','url');
+$post_name=arg('post_name','post','txt');
+$post_bcat=arg('post_bcat','post','int');
+$post_head=arg('post_head','post','url');
+$post_pos=arg('post_pos','post','txt');
+$post_email=arg('post_email','post','url');
+$post_qqnum=arg('post_qqnum','post','txt');
+$post_phone=arg('post_phone','post','url');
+$post_isok=arg('post_isok','post','int');
+$post_sort=arg('post_sort','post','int');
+$cus=db_getshow('customer','*','webid='.$website['webid'].' and id='.$tcz['id']);
+if($cus){
+	if($cus['head']!=$post_head){
+		if($cus['head']!=''){
+			$delpath='..'.getfile_admin('pic',$cus['head']);
+			if(file_exists($delpath))unlink($delpath);
+			}
+		if($post_head!=''){
+			$oldhead='../'.$website['upfolder'].setup_uptemp.$post_head;
+			$post_head='customer/'.date('Ym_').$post_head;
+			copy($oldhead,'../'.$website['upfolder'].$post_head);
+			}
+		}
+	db_upshow('customer','name="'.$post_name.'",bcat='.$post_bcat.',head="'.$post_head.'",pos="'.$post_pos.'",qqnum="'.$post_qqnum.'",phone="'.$post_phone.'",email="'.$post_email.'",isok='.$post_isok.',sort='.$post_sort,'id='.$tcz['id']);
+	infoadminlog($website['webid'],$tcz['admin'],16,'编辑客服资料“'.$post_name.'”（ID='.$tcz['id'].'）');
+}else{
+	if($post_head!=''){
+		$oldhead='../'.$website['upfolder'].setup_uptemp.$post_head;
+		$post_head='customer/'.date('Ym_').$post_head;
+		copy($oldhead,'../'.$website['upfolder'].$post_head);
+		}
+	$tab='webid,languages,name,bcat,head,pos,qqnum,phone,email,isok,sort';
+	$val=$website['webid'].',"'.$post_languages.'","'.$post_name.'",'.$post_bcat.',"'.$post_head.'","'.$post_pos.'","'.$post_qqnum.'","'.$post_phone.'","'.$post_email.'",'.$post_isok.','.$post_sort;
+	db_intoshow('customer',$tab,$val);
+	infoadminlog($website['webid'],$tcz['admin'],16,'新建客服资料“'.$post_name.'”');
+	}
+countcapacity($website['webid']);
+ajaxreturn(0,'客服信息编辑成功');

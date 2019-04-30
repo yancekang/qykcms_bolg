@@ -1,0 +1,17 @@
+{:file="header"}
+<div class="qyk_both">
+	<div class="block">
+		<div class="content_blog">
+			<div class="show1"><h3>{:art="title"}</h3></div>
+			<div class="show2">时间：{:art="time_add"}　人气：{:art="hits_ajax"}</div>
+			<div class="show3 bodycontent">{:art="content",showcode=true}</div>
+			{:list.page}
+		</div>
+		<div class="prenext">
+			<div><span>上一篇：</span>{:artfind="pre",none="当前为第一篇"}</div>
+			<div><span>下一篇：</span>{:artfind="next",none="没有下一篇了"}</div>
+		</div>
+		{:comment}
+	</div>
+</div>
+{:file="footer"}

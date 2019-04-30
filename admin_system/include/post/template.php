@@ -1,0 +1,28 @@
+<?php
+//ajaxreturn(1,'暂未支持在线编缉');
+if(!ispower($admin_group,'skin_list'))ajaxreturn(1,'权限不足，操作失败');
+$file=arg('file','post','url');
+$content=arg('content','post','url');
+$content=str_replace('{||}','\'',$content);
+$staticfile=db_getone('config','varval','varname="setup_static_file"');
+if(!$staticfile)$staticfile='httpd.ini';
+if($file=='../'.$staticfile||$file=='../include/config.php'){
+	if(!$website['isadmin'])ajaxreturn(1,'权限不足，操作失败');
+	$post_file=$file;
+}else{
+	if(strstr($file,'./')){
+		ajaxreturn(1,'不存在的文件路径');
+		}
+	$post_file='../'.setup_webfolder.$website['webid'].'/'.$file;
+	}
+if(setup_editfile_bak){
+	$post_file_bak=iconv("utf-8","gb2312",str_replace($post_file,$post_file.'.bak.',$post_file));
+	$post_file=iconv("utf-8","gb2312",$post_file);
+	@rename($post_file,$post_file_bak);
+	}
+@$file=fopen($post_file,'w');
+if(!$file)ajaxreturn(1,'保存文件失败');
+fwrite($file,$content);
+fclose($file);
+countcapacity($website['webid']);
+ajaxreturn(0,'文件内容已成功保存');

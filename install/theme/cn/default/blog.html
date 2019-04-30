@@ -1,0 +1,13 @@
+{:file="header"}
+<div class="qyk_left">
+	<div class="left_tit">
+		<div class="left">{:column}</div>
+		<div class="right"><a href="{:link}" class="{:goif(!$tcz['scat']&&!$tcz['lcat'],'scat_on','scat_out')}">全部</a>{:list.menu}</div>
+	</div>
+	<div class="bloglist qyk_shadow">
+		{:list="blog",mod=1,page=true,size=12,none="<div class='qyk_none'>主人有点懒，这里什么都还没有...</div>"}
+		{:list.page}
+	</div>
+</div>
+<div class="qyk_right">{:file="side_blog"}</div>
+{:file="footer"}

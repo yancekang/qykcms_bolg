@@ -1,0 +1,17 @@
+{:file="header"}
+<div class="qyk_both">
+	<div class="block">
+		<div class="content_blog">
+			<div class="show1"><h3>{:art="title"}</h3></div>
+			<div class="show2">时间：{:art="time_add"}　人气：{:art="hits_ajax"}</div>
+			<div class="show3 bodycontent"><p align="center" id="qyk_coverlink"><img src="{:art="cover",size="b"}"></p>{:art="content"}</div>
+			{:list.page}
+		</div>
+		<div class="prenext">
+			<div id="tcz_prephoto"><span>上一张：</span>{:artfind="pre",none="当前为第一张"}</div>
+			<div id="tcz_nextphoto"><span>下一张：</span>{:artfind="next",none="没有下一张了"}</div>
+		</div>
+		{:comment}
+	</div>
+</div>
+{:file="footer"}
